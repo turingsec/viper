@@ -33,15 +33,15 @@ mlogger.prototype.init = function(dir, filename){
 		),
 		levels: winston.config.syslog.levels,
 		transports: [
-			new winston.transports.Console({ level: 'error' }),
+			new winston.transports.Console({ level: 'info' }),
 			new DailyRotateFile({
 				dirname: dir,
 				filename: 'log_file.log'
 			})
 		]
 	});
-
-	["error", "warn", "info", "verbose", "debug", "silly"].forEach(function(level){
+	
+	["error", "warning", "info", "verbose", "debug", "silly"].forEach(function(level){
 		Object.defineProperty(self, level, {
 			get : function () {
 				return self.logger[level];
