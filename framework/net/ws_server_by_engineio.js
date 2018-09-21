@@ -5,7 +5,7 @@
 const engine = require('engine.io');
 const event_manager = require("../../adaptor/event_manager");
 const constants = require("../../util/constants");
-const mlogger = require("../../../common/mlogger");
+const mlogger = require("../../common/mlogger");
 
 var websocket_server = function(app, opts){
 	opts = opts || {};

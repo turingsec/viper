@@ -5,7 +5,7 @@ const cp = require('child_process');
 const path = require('path');
 const event_manager = require("../../adaptor/event_manager");
 const constants = require("../../util/constants");
-const mlogger = require("../../../common/mlogger");
+const mlogger = require("../../common/mlogger");
 
 var master = module.exports = {};
 var self = master;

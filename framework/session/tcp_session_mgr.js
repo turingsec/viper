@@ -2,7 +2,7 @@
  * Module dependencies.
  */
 const constants = require("../../util/constants");
-const mlogger = require("../../../common/mlogger");
+const mlogger = require("../../common/mlogger");
 
 var tcp_session_mgr = module.exports = {};
 var self = tcp_session_mgr;

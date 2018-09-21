@@ -4,7 +4,7 @@
 const uuid = require("../../util/uuid");
 const event_manager = require("../../adaptor/event_manager");
 const constants = require("../../util/constants");
-const mlogger = require("../../../common/mlogger");
+const mlogger = require("../../common/mlogger");
 
 function ws_session(){
 	this.id = null;

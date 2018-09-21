@@ -11,7 +11,7 @@ const RateLimit = require('express-rate-limit');
 const debug = require('debug')('myapp:server');
 const http = require('http');
 const https = require('https');
-const mlogger = require("../../../common/mlogger");
+const mlogger = require("../../common/mlogger");
 const favicon = require('serve-favicon');
 
 var express_server = function(_, opts){

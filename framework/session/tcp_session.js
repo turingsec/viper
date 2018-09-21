@@ -5,7 +5,7 @@ const uuid = require("../../util/uuid");
 const event_manager = require("../../adaptor/event_manager");
 const constants = require("../../util/constants");
 const input = require("../stream/input");
-const mlogger = require("../../../common/mlogger");
+const mlogger = require("../../common/mlogger");
 
 function tcp_session(){
 	this.id = null;

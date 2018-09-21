@@ -5,7 +5,7 @@
 const net = require("net");
 const event_manager = require("../../adaptor/event_manager");
 const constants = require("../../util/constants");
-const mlogger = require("../../../common/mlogger");
+const mlogger = require("../../common/mlogger");
 
 var tcp_server = function(app, opts){
 	opts = opts || {};
