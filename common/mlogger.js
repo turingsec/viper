@@ -33,7 +33,7 @@ mlogger.prototype.init = function(dir, filename){
 		),
 		levels: winston.config.syslog.levels,
 		transports: [
-			new winston.transports.Console({ level: 'info' }),
+			new winston.transports.Console({ level: 'error' }),
 			new DailyRotateFile({
 				dirname: dir,
 				filename: 'log_file.log'
