@@ -67,8 +67,12 @@ Application.adaptor_init = function(cb){
 		
 		// IPC
 		event_manager.regist(constants.EVENT.PROCESS_PACKET, comp_manager.get(constants.COMPONENT.MASTER_PROCESS).send2child);
+
+		//UDP
+		event_manager.regist(constants.EVENT.UDP_PACKET_PARSING, comp_manager.get(constants.COMPONENT.DGRAM_PARSER).handle_package);
+		
 	}catch(e){
-		cb(e);
+		cb(e)
 	}
 }
 

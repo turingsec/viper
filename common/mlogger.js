@@ -40,8 +40,8 @@ mlogger.prototype.init = function(dir, filename){
 			})
 		]
 	});
-
-	["error", "warn", "info", "verbose", "debug", "silly"].forEach(function(level){
+	
+	["error", "warning", "info", "verbose", "debug", "silly"].forEach(function(level){
 		Object.defineProperty(self, level, {
 			get : function () {
 				return self.logger[level];

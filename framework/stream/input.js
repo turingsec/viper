@@ -11,7 +11,7 @@ var input_stream = function(size){
 input_stream.prototype.write = function(data){
 	if (data.length > 0) {
 		if (this.index + data.length > this.size) {
-			logger.error('长度不合法: this.index:' + this.index + "数据长度:" + data.length + "接收的总长度:" + this.size);
+			console.log('长度不合法: this.index:' + this.index + "数据长度:" + data.length + "接收的总长度:" + this.size);
 			throw new Error("xxx");
 		}
 
@@ -30,11 +30,11 @@ input_stream.prototype.get_data = function(start, len){
 	if(this.index < start + len){
 		return null;
 	}
-	
+
 	var target = Buffer.alloc(len);
-	
+
 	this.buffer.copy(target, 0, start, start + len);
-	
+
 	return target;
 }
 
