@@ -10,6 +10,20 @@ function model_base(){
 	this.model = null;
 }
 
+model_base.prototype.promise_count = function(cond){
+	let self = this;
+	
+	return new Promise((resolve, reject) => {
+		self.model.count(cond, function(err, count){
+			if(err){
+				console.log("count err:" + err);
+			}
+			
+			resolve(count);
+		});
+	});
+}
+
 model_base.prototype.count = function(cond, cb){
 	this.model.count(cond, function(err, count){
 		if(err){
