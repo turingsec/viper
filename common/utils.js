@@ -7,6 +7,7 @@ const UUID = require('uuid');
 const rsa = require("node-rsa");
 const https = require('https');
 const http = require('http');
+const url = require('url');
 
 var utils = module.exports = {};
 
@@ -137,6 +138,18 @@ utils.valid_subnet_mask = function(mask){
 	var reg = /^(([01]?\d?\d|2[0-4]\d|25[0-5])\.){3}([01]?\d?\d|2[0-4]\d|25[0-5])\/(\d{1}|[0-2]{1}\d{1}|3[0-2])$/;
 
 	return reg.test(mask);
+}
+
+utils.valid_url = function(query){
+	if(!this.valid_https(query)){
+		query = "https://" + query;
+	}
+
+	if(this.valid_domain(url.parse(query).hostname)){
+		return true;
+	}
+
+	return false;
 }
 
 utils.valid_domain_rr = function(domain){
