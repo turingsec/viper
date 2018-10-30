@@ -10,6 +10,14 @@ const http = require('http');
 
 var utils = module.exports = {};
 
+utils.delete_duplicate = function(a, b){
+	let c = a.concat(b);
+	
+	return c.filter(function(item, pos) {
+		return c.indexOf(item) == pos && !!item;
+	});
+}
+
 utils.rsa_decrypto = function(privateKey, crypto_data, length, cb) {
 	var container = [];
 	var key = new rsa(privateKey, "pkcs1-private-pem", {
