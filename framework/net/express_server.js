@@ -66,7 +66,7 @@ express_server.prototype.start = function(cb) {
     app.use(bodyParser.raw({limit: '50mb'}));
     app.use(bodyParser.text());
     app.use(bodyParser.urlencoded({ extended: false }));
-// 解决微信支付通知回调数据
+	// 解决微信支付通知回调数据
     app.use(bodyParser.xml({
         limit: '2MB', // Reject payload bigger than 1 MB
         xmlParseOptions: {
@@ -79,10 +79,11 @@ express_server.prototype.start = function(cb) {
 
     if(this.allow_origin){
         app.all("*", function (req, res, next) {
-            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Origin', req.headers.host);
             res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With');
             res.header('Access-Control-Allow-Methods', 'POST, GET');
-
+            res.header('Access-Control-Allow-Credentials', 'true');
+			
             if (req.method == 'OPTIONS') {
                 res.send(200);
             } else {
