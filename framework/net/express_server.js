@@ -79,7 +79,7 @@ express_server.prototype.start = function(cb) {
 
     if(this.allow_origin){
         app.all("*", function (req, res, next) {
-            res.header('Access-Control-Allow-Origin', req.headers.host);
+            res.header('Access-Control-Allow-Origin', req.headers.origin);
             res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With');
             res.header('Access-Control-Allow-Methods', 'POST, GET');
             res.header('Access-Control-Allow-Credentials', 'true');
