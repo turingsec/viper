@@ -286,6 +286,10 @@ utils.load_file = function(file_path) {
 	});
 }
 
+utils.read_file_sync = function(file_path, encode = "utf8"){
+	return fs.readFileSync(file_path, {"encoding" : encode})
+}
+
 utils.get_obj_length = function(obj){
 	return Object.keys(obj).length;
 }
