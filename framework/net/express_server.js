@@ -107,7 +107,7 @@ express_server.prototype.start = function (cb) {
     const {Nuxt, Builder} = require('nuxt');
     let nuxt_config = require('../../../cluster/web_server/nuxt.config.js')
     let CONFIG = require('../../../cluster/web_server/config')
-    nuxt_config.dev = false// !CONFIG.RELEASE
+    nuxt_config.dev = !CONFIG.RELEASE
     const nuxt = new Nuxt(nuxt_config);
 // 在开发模式下启用编译构建和热加载
     if (nuxt_config.dev) {
