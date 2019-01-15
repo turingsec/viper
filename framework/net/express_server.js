@@ -28,6 +28,7 @@ var express_server = function (_, opts) {
   this.ssl = opts.ssl;
   this.express = opts.express;
   this.allow_origin = opts.allow_origin;
+  this.nuxt = opts.nuxt
 };
 
 express_server.prototype.start = function (cb) {
@@ -36,11 +37,6 @@ express_server.prototype.start = function (cb) {
   var app = express();
   var count = this.port.length;
   var self = this;
-  const {Nuxt, Builder} = require('nuxt');
-  let nuxt_config = require('../../../cluster/web_server/nuxt.config.js')
-  let CONFIG = require('../../../cluster/web_server/config')
-  nuxt_config.dev = !CONFIG.RELEASE
-  const nuxt = new Nuxt(nuxt_config);
   /*
   app.use(new RateLimit({
       windowMs: 1 * 60 * 1000,
@@ -107,7 +103,21 @@ express_server.prototype.start = function (cb) {
   for (let dst in this.routes) {
     app.use(dst, this.routes[dst]);
   }
-  app.use(nuxt.render);
+  if (this.nuxt) {
+    const {Nuxt, Builder} = require('nuxt');
+    let nuxt_config = require('../../../cluster/web_server/nuxt.config.js')
+    let CONFIG = require('../../../cluster/web_server/config')
+    nuxt_config.dev = false// !CONFIG.RELEASE
+    const nuxt = new Nuxt(nuxt_config);
+// 在开发模式下启用编译构建和热加载
+    if (nuxt_config.dev) {
+      new Builder(nuxt).build()
+        .then(() => {
+          console.log('---------------nuxt ready success------------------')
+        })
+    }
+    app.use(nuxt.render);
+  }
   // catch 404 and forward to error handler
   app.use(function (req, res, next) {
     var err = new Error('Not Found');
@@ -134,13 +144,6 @@ express_server.prototype.start = function (cb) {
   });
 
 
-// 在开发模式下启用编译构建和热加载
-  if (nuxt_config.dev) {
-    new Builder(nuxt).build()
-      .then(() => {
-        console.log('nuxt ready success')
-      })
-  }
   this.port.forEach(function (item) {
     var server = null;
 
