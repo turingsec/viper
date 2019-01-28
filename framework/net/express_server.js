@@ -28,7 +28,8 @@ var express_server = function (_, opts) {
   this.ssl = opts.ssl;
   this.express = opts.express;
   this.allow_origin = opts.allow_origin;
-  this.nuxt = opts.nuxt
+  this.nuxt = opts.nuxt || false
+  this.middleware = opts.middleware || []
 };
 
 express_server.prototype.start = function (cb) {
@@ -94,6 +95,10 @@ express_server.prototype.start = function (cb) {
     });
   }
 
+  //middleware
+  for (let val of this.middleware) {
+    app.use(val)
+  }
   //setting subdomain
   for (let dst in this.subdomain) {
     app.use(vhost(dst, this.subdomain[dst]));
