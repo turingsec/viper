@@ -677,6 +677,11 @@ utils.valid_https = function(suspect){
 	return pattern.test(suspect);
 }
 
+utils.valid_cve_id = function(cve_id){
+	var reg_cve = /CVE-(\d{4})-\d{4,7}/;
+	return reg_cve.test(cve_id);
+}
+
 utils.size_readable = function(num, index) {
     let i = index !== undefined ? index : 0;
     let count = parseFloat(num);
@@ -693,15 +698,3 @@ utils.size_readable = function(num, index) {
         return '0.00 B'
     }
 };
-
-utils.unzip = function(buf){
-	var zip = new admzip(buf);
-	var zipEntries = zip.getEntries();
-	var ret = {};
-
-	for (var i = 0; i < zipEntries.length; i++){
-		ret[zipEntries[i]] = zip.readAsText(zipEntries[i]);
-	}
-
-	return ret;
-}
