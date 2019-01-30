@@ -9,6 +9,7 @@ const https = require('https');
 const http = require('http');
 const os = require('os');
 const exec = require('child_process').exec;
+const admzip = require('adm-zip');
 
 var utils = module.exports = {};
 
@@ -288,6 +289,10 @@ utils.load_file = function(file_path) {
 
 utils.read_file_sync = function(file_path, encode = "utf8"){
 	return fs.readFileSync(file_path, {"encoding" : encode})
+}
+
+utils.write_file_sync = function(file_path, data){
+	fs.writeFileSync(file_path, data);
 }
 
 utils.get_obj_length = function(obj){
@@ -688,3 +693,15 @@ utils.size_readable = function(num, index) {
         return '0.00 B'
     }
 };
+
+utils.unzip = function(buf){
+	var zip = new admzip(buf);
+	var zipEntries = zip.getEntries();
+	var ret = {};
+
+	for (var i = 0; i < zipEntries.length; i++){
+		ret[zipEntries[i]] = zip.readAsText(zipEntries[i]);
+	}
+
+	return ret;
+}
