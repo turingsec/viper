@@ -7,7 +7,7 @@ const request = require('request');
 
 var net_op = module.exports = {};
 
-net_op.request = function (obj, option, cb) {
+net_op.request = function (obj, option) {
 	return new Promise((resolve, reject) => {
 		obj.get(option, function (res) {
 			var data = [], dataLen = 0;

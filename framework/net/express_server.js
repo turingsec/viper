@@ -47,14 +47,6 @@ express_server.prototype.start = function (cb) {
 	app.use(compression());
 
 	if (this.express) {
-		if (!!this.express.extra) {
-			app.use(this.express.extra);
-		}
-
-		if (!!this.express.https_require) {
-			app.use(this.express.https_require);
-		}
-
 		app.set('views', this.express.views);
 		app.engine('html', require('ejs').renderFile);
 		app.set('view engine', 'html');
