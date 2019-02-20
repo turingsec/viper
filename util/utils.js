@@ -698,3 +698,11 @@ utils.size_readable = function(num, index) {
         return '0.00 B'
     }
 };
+
+utils.delete_duplicate = function(a, b){
+	let c = a.concat(b);
+	
+	return c.filter(function(item, pos) {
+		return c.indexOf(item) == pos && !!item;
+	});
+}
