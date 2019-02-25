@@ -14,6 +14,15 @@ const admzip = require('adm-zip');
 var utils = module.exports = {};
 
 /**
+ * 同步 延迟
+ * @param ms
+ * @returns {Promise<any>}
+ */
+utils.sleep = (ms) => {
+	return new Promise(resolve => setTimeout(resolve, ms))
+  }
+
+/**
  * Invoke callback with check
  */
 utils.invokeCallback = function(cb) {
