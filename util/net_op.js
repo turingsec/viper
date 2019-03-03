@@ -2,12 +2,14 @@
  * Module dependencies.
  */
 const request = require('request');
+const ip_mod = require('ip');
+const randomip = require('random-ip');
 
 var net_op = module.exports = {};
 
 net_op.common_request = function (options) {
 	options["timeout"] = options["timeout"] || 3000;
-	
+
 	return new Promise(function (resolve, reject) {
 		request(options, function (err, res, body) {
 			if (!err && res.statusCode == 200) {
@@ -18,13 +20,13 @@ net_op.common_request = function (options) {
 				});
 				return;
 			}
-			
-			if (err){
+
+			if (err) {
 				resolve({
 					"success": false,
 					"msg": "Internal Server Error"
 				});
-			}else{
+			} else {
 				resolve({
 					"success": false,
 					"msg": `${res.statusCode} with body: ${body}`
@@ -32,4 +34,14 @@ net_op.common_request = function (options) {
 			}
 		});
 	});
+}
+
+net_op.random_public_ipv4 = function () {
+	let ip = randomip('0.0.0.0', 0);
+
+	if(ip_mod.isPrivate(ip)){
+		return self.random_public_ipv4();
+	}
+
+	return ip;
 }
