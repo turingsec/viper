@@ -37,6 +37,7 @@ net_op.common_request = function (options) {
 }
 
 net_op.random_public_ipv4 = function () {
+	let self = this;
 	let ip = randomip('0.0.0.0', 0);
 
 	if(ip_mod.isPrivate(ip)){
