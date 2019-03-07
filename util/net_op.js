@@ -24,12 +24,16 @@ net_op.common_request = function (options) {
 			if (err) {
 				resolve({
 					"success": false,
-					"msg": "Internal Server Error"
+					"msg": "Internal Server Error",
+					"body": body,
+					"headers": res.headers
 				});
 			} else {
 				resolve({
 					"success": false,
-					"msg": `${res.statusCode} with body: ${body}`
+					"msg": `${res.statusCode} with body: ${body}`,
+					"body": body,
+					"headers": res.headers
 				});
 			}
 		});
