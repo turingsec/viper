@@ -25,8 +25,8 @@ net_op.common_request = function (options) {
 				resolve({
 					"success": false,
 					"msg": "Internal Server Error",
-					"body": body,
-					"headers": res.headers
+					"body": "",
+					"headers": {}
 				});
 			} else {
 				resolve({
