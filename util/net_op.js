@@ -9,7 +9,8 @@ var net_op = module.exports = {};
 
 net_op.common_request = function (options) {
 	options["timeout"] = options["timeout"] || 3000;
-
+	options["followRedirect"] = false;
+	
 	return new Promise(function (resolve, reject) {
 		request(options, function (err, res, body) {
 			if (!err && res.statusCode == 200) {
@@ -26,7 +27,8 @@ net_op.common_request = function (options) {
 					"success": false,
 					"msg": "Internal Server Error",
 					"body": "",
-					"headers": {}
+					"headers": {},
+					"err": err
 				});
 			} else {
 				resolve({
