@@ -10,6 +10,7 @@ const http = require('http');
 const os = require('os');
 const exec = require('child_process').exec;
 const admzip = require('adm-zip');
+const xml2js = require('xml2js');
 
 var utils = module.exports = {};
 
@@ -718,7 +719,7 @@ utils.delete_duplicate = function (a, b) {
 
 utils.xmlToJson = function (xml) {
 	return new Promise((resolve, reject) => {
-		parseString(xml, function (err, result) {
+		xml2js.parseString(xml, function (err, result) {
 			if (err) {
 				reject(err)
 			}
