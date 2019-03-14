@@ -31,7 +31,6 @@ net_op.common_request = function (options) {
 					"err": err
 				});
 			} else {
-				console.log(res)
 				resolve({
 					"success": false,
 					"msg": `${res.statusCode} with body: ${body}`,
