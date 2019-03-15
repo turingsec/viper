@@ -17,7 +17,9 @@ net_op.common_request = function (options) {
 				resolve({
 					"success": true,
 					"body": body,
-					"headers": res.headers
+					"headers": res.headers,
+					"status_code": res.statusCode,
+					"status_message": res.statusMessage
 				});
 				return;
 			}
