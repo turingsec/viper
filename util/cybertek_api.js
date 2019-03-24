@@ -8,8 +8,8 @@ function cybertek_api(){
 
 }
 
-cybertek_api.prototype.file_upload = function(content, filename, config){
-	return net_op.common_request({
+cybertek_api.prototype.file_upload = async function(content, filename, config){
+	return await net_op.common_request({
 		url: `${config.URL}/file/upload`,
 		method: 'POST',
 		formData: {
@@ -24,22 +24,22 @@ cybertek_api.prototype.file_upload = function(content, filename, config){
 	});
 }
 
-cybertek_api.prototype.ipv4_geo = function(ip, config){
-	return net_op.common_request({
+cybertek_api.prototype.ipv4_geo = async function(ip, config){
+	return await net_op.common_request({
 		url: `${config.URL}/ipv4/geo?apikey=${config.APIKEY}&ip=${ip}`,
 		method: 'GET'
 	});
 }
 
-cybertek_api.prototype.ipv4_report = function(ip, config){
-	return net_op.common_request({
+cybertek_api.prototype.ipv4_report = async function(ip, config){
+	return await net_op.common_request({
 		url: `${config.URL}/ipv4/report?apikey=${config.APIKEY}&ip=${ip}`,
 		method: 'GET'
 	});
 }
 
-cybertek_api.prototype.file_engine = function(sha256, config){
-	return net_op.common_request({
+cybertek_api.prototype.file_engine = async function(sha256, config){
+	return await net_op.common_request({
 		url: `${config.URL}/file/engine?apikey=${config.APIKEY}&file_hash=${sha256}`,
 		method: 'GET'
 	});

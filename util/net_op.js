@@ -10,7 +10,7 @@ var net_op = module.exports = {};
 net_op.common_request = function (options) {
 	options["timeout"] = options["timeout"] || 3000;
 	options["followRedirect"] = false;
-  options["rejectUnauthorized"] = false;
+	options["rejectUnauthorized"] = false;
 
 	return new Promise(function (resolve, reject) {
 		request(options, function (err, res, body) {
