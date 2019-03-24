@@ -1,8 +1,8 @@
 const net_op = require("./net_op");
 
-(function(){
+module.exports = (function(){
 	return new cybertek_api();
-})()
+})();
 
 function cybertek_api(){
 
@@ -10,7 +10,7 @@ function cybertek_api(){
 
 cybertek_api.prototype.common_request = async function(options){
 	let ret = await net_op.common_request(options);
-
+	
 	if(ret.success){
 		switch(ret.body.code){
 			case macro.ERROR_CODE.SUCCESS:
@@ -35,7 +35,7 @@ cybertek_api.prototype.common_request = async function(options){
 
 cybertek_api.prototype.file_upload = function(content, filename, config){
 	return this.common_request({
-		url: `${config.server}/file/upload`,
+		url: `${config.URL}/file/upload`,
 		method: 'POST',
 		formData: {
 			file: {
@@ -44,28 +44,28 @@ cybertek_api.prototype.file_upload = function(content, filename, config){
 					filename: filename
 				}
 			},
-			apikey: `${config.apikey}`
+			apikey: `${config.APIKEY}`
 		}
 	});
 }
 
 cybertek_api.prototype.ipv4_geo = function(ip, config){
 	return this.common_request({
-		url: `${config.server}/ipv4/geo?apikey=${config.apikey}&ip=${ip}`,
+		url: `${config.URL}/ipv4/geo?apikey=${config.APIKEY}&ip=${ip}`,
 		method: 'GET'
 	});
 }
 
 cybertek_api.prototype.ipv4_report = function(ip, config){
 	return this.common_request({
-		url: `${config.server}/ipv4/report?apikey=${config.apikey}&ip=${ip}`,
+		url: `${config.URL}/ipv4/report?apikey=${config.APIKEY}&ip=${ip}`,
 		method: 'GET'
 	});
 }
 
 cybertek_api.prototype.file_engine = function(sha256, config){
 	return this.common_request({
-		url: `${config.server}/file/engine?apikey=${config.apikey}&file_hash=${sha256}`,
+		url: `${config.URL}/file/engine?apikey=${config.APIKEY}&file_hash=${sha256}`,
 		method: 'GET'
 	});
 }
