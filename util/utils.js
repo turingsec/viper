@@ -11,6 +11,7 @@ const os = require('os');
 const exec = require('child_process').exec;
 const admzip = require('adm-zip');
 const xml2js = require('xml2js');
+const parseDomain = require('parse-domain');
 
 var utils = module.exports = {};
 
@@ -388,8 +389,14 @@ utils.valid_domain_rr = function (domain) {
 }
 
 utils.valid_domain = function (v) {
-	if (typeof v !== 'string') return false;
+	const obj = parseDomain(v);
+	
+	if (!obj) {
+		return false;
+	}
 
+	if (typeof v !== 'string') return false;
+	
 	var parts = v.split('.');
 	if (parts.length <= 1) return false;
 
