@@ -58,6 +58,6 @@ net_op.random_public_ipv4 = function () {
 	return ip;
 }
 
-net_op.is_private() = function(){
+net_op.is_private = function(ip){
 	return ip_mod.isPrivate(ip);
 }
