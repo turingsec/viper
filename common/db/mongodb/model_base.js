@@ -10,11 +10,11 @@ function model_base(){
 	this.model = null;
 }
 
-model_base.prototype.promise_count = function(cond){
+model_base.prototype.promise_count = function(cond, options = {}){
 	let self = this;
 	
 	return new Promise((resolve, reject) => {
-		self.model.count(cond, function(err, count){
+		self.model.count(cond, options, function(err, count){
 			if(err){
 				console.log("count err:" + err);
 			}
