@@ -695,7 +695,7 @@ utils.valid_https = function (suspect) {
 }
 
 utils.valid_cve_id = function (cve_id) {
-	var reg_cve = /CVE-(\d{4})-\d{4,7}/;
+	var reg_cve = /^(CVE-(1999|2\d{3})-(0\d{2}[0-9]|[1-9]\d{3,}))$/i;
 	return reg_cve.test(cve_id);
 }
 
