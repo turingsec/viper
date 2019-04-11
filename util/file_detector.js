@@ -30,17 +30,16 @@ file_detector.prototype.tell = function(content){
 file_detector.prototype.is_pcap = async function(content){
 	let result = await this.tell(content);
 
-	if(result.startsWith("tcpdump capture file") || 
-		result.startsWith("pcap-ng capture file")){
-			return true;
-		}
-
+	if(result.startsWith("tcpdump capture file")/* || result.startsWith("pcap-ng capture file")*/){
+		return true;
+	}
+	
 	return false;
 }
 
 file_detector.prototype.is_executable = async function(content){
 	let result = await this.tell(content);
-
+	
 	if(result.startsWith("ELF") || 
 		result.startsWith("PE")){
 			return true;
