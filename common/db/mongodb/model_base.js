@@ -71,8 +71,8 @@ model_base.prototype.find_many = function(condi, cb){
 	});
 }
 
-model_base.prototype.find_one = function(condi, cb){
-	this.model.findOne(condi).exec(function(err, adventure){
+model_base.prototype.find_one = function(condi, project, cb){
+	this.model.findOne(condi).select(project).exec(function(err, adventure){
 		if(err){
 			console.log(err);
 			cb(null);
