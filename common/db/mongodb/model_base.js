@@ -14,7 +14,7 @@ model_base.prototype.promise_count = function(cond){
 	let self = this;
 	
 	return new Promise((resolve, reject) => {
-		self.model.count(cond, function(err, count){
+		self.model.countDocuments(cond, function(err, count){
 			if(err){
 				console.log("count err:" + err);
 			}
@@ -25,7 +25,7 @@ model_base.prototype.promise_count = function(cond){
 }
 
 model_base.prototype.count = function(cond, cb){
-	this.model.count(cond, function(err, count){
+	this.model.countDocuments(cond, function(err, count){
 		if(err){
 			console.log("count err:" + err);
 		}
