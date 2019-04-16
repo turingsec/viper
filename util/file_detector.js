@@ -37,6 +37,16 @@ file_detector.prototype.is_pcap = async function(content){
 	return false;
 }
 
+file_detector.prototype.is_pe = async function(content){
+	let result = await this.tell(content);
+	
+	if(result.startsWith("PE")){
+		return true;
+	}
+	
+	return false;
+}
+
 file_detector.prototype.is_executable = async function(content){
 	let result = await this.tell(content);
 	
