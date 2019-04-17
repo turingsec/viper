@@ -40,20 +40,35 @@ file_detector.prototype.is_pcap = async function(content){
 file_detector.prototype.is_pe = async function(content){
 	let result = await this.tell(content);
 	
-	if(result.startsWith("PE")){
+	if(result.startsWith("PE32 executable") || 
+		result.startsWith("PE32+ executable")){
 		return true;
 	}
 	
 	return false;
 }
 
-file_detector.prototype.is_executable = async function(content){
+file_detector.prototype.allow_upload = async function(){
 	let result = await this.tell(content);
 	
-	if(result.startsWith("ELF") || 
-		result.startsWith("PE")){
-			return true;
-		}
+	if(result.startsWith("PE32 executable") ||
+		result.startsWith("PE32+ executable") ||
+		result.startsWith("ELF") ||
+		result.startsWith("Composite Document File") || 
+		result.startsWith("Microsoft Word") || 
+		result.startsWith("Microsoft Excel") ||
+		result.startsWith("Microsoft PowerPoint") ||
+		result.startsWith("PDF document") || 
+		result.startsWith("ISO-8859 text") ||
+		result.startsWith("ASCII text") ||
+		result.startsWith("UTF-8 Unicode text") ||
+		result.startsWith("Python script text executable") ||
+		result.startsWith("Rich Text Format data") ||
+		result.startsWith("Bourne-Again shell script text executable") ||
+		result.startsWith("HTML document text")){
 		
+		return true;
+	}
+	
 	return false;
 }
