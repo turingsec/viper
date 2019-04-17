@@ -48,7 +48,7 @@ file_detector.prototype.is_pe = async function(content){
 	return false;
 }
 
-file_detector.prototype.allow_upload = async function(){
+file_detector.prototype.allow_upload = async function(content){
 	let result = await this.tell(content);
 	
 	if(result.startsWith("PE32 executable") ||
