@@ -51,21 +51,25 @@ file_detector.prototype.is_pe = async function(content){
 file_detector.prototype.allow_upload = async function(content){
 	let result = await this.tell(content);
 	
-	if(result.startsWith("PE32 executable") ||
-		result.startsWith("PE32+ executable") ||
-		result.startsWith("ELF") ||
-		result.startsWith("Composite Document File") || 
-		result.startsWith("Microsoft Word") || 
-		result.startsWith("Microsoft Excel") ||
-		result.startsWith("Microsoft PowerPoint") ||
-		result.startsWith("PDF document") || 
-		result.startsWith("ISO-8859 text") ||
-		result.startsWith("ASCII text") ||
-		result.startsWith("UTF-8 Unicode text") ||
-		result.startsWith("Python script text executable") ||
-		result.startsWith("Rich Text Format data") ||
-		result.startsWith("Bourne-Again shell script text executable") ||
-		result.startsWith("HTML document text")){
+	return this.is_document(result);
+}
+
+file_detector.prototype.is_document = function(id){
+	if(id.startsWith("PE32 executable") ||
+		id.startsWith("PE32+ executable") ||
+		id.startsWith("ELF") ||
+		id.startsWith("Composite Document File") || 
+		id.startsWith("Microsoft Word") || 
+		id.startsWith("Microsoft Excel") ||
+		id.startsWith("Microsoft PowerPoint") ||
+		id.startsWith("PDF document") || 
+		id.startsWith("ISO-8859 text") ||
+		id.startsWith("ASCII text") ||
+		id.startsWith("UTF-8 Unicode text") ||
+		id.startsWith("Python script text executable") ||
+		id.startsWith("Rich Text Format data") ||
+		id.startsWith("Bourne-Again shell script text executable") ||
+		id.startsWith("HTML document text")){
 		
 		return true;
 	}
