@@ -69,7 +69,7 @@ file_detector.prototype.is_document = function(id){
 		id.startsWith("Python script text executable") ||
 		id.startsWith("Rich Text Format data") ||
 		id.startsWith("Bourne-Again shell script text executable") ||
-		id.startsWith("HTML document text")){
+		id.startsWith("HTML document")){
 		
 		return true;
 	}

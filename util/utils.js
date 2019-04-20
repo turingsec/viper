@@ -738,3 +738,18 @@ utils.xmlToJson = function (xml) {
 		})
 	})
 }
+
+/**
+ * 获取 父域名
+ * @param domain
+ * @constructor
+ */
+utils.get_parent_domain = function(domain) {
+	let parent_domain = null;
+
+	if (domain.split(".").length > 2) {
+		parent_domain = domain.slice(domain.indexOf(".") + 1);
+	}
+
+	return parent_domain;
+}
