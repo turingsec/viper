@@ -745,11 +745,16 @@ utils.xmlToJson = function (xml) {
  * @constructor
  */
 utils.get_parent_domain = function(domain) {
+	let obj = parseDomain(domain);
 	let parent_domain = null;
-
-	if (domain.split(".").length > 2) {
-		parent_domain = domain.slice(domain.indexOf(".") + 1);
+	
+	if(obj.subdomain){
+		if (obj.subdomain.split(".").length > 1) {
+			parent_domain = `${obj.subdomain.slice(obj.subdomain.indexOf(".") + 1)}.${obj.domain}.${obj.tld}`;
+		}else{
+			parent_domain = `${obj.domain}.${obj.tld}`;
+		}
 	}
-
+	
 	return parent_domain;
 }
