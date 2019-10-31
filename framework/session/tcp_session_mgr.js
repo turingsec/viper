@@ -32,7 +32,6 @@ tcp_session_mgr.ready2send = function(message, cb){
 		var session = self.get_session_by_id(opts["id"]);
 		
 		if(session){
-			
 			if(opts["closed"]){
 				session.kill("initiative");
 			}else{

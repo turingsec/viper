@@ -27,7 +27,7 @@ var STATE_STOPPED = 4; // app has stoped
  *	
  *   - setup default configuration
  */
-Application.init = function(marsnake, opts, cb){
+Application.init = function(viper, opts, cb){
 	opts = opts || {};
 	
 	this.start_time = null;
@@ -38,7 +38,7 @@ Application.init = function(marsnake, opts, cb){
 	comp_manager.init(opts);
 	
 	this.adaptor_init(cb);
-	this.load_infrastructure(marsnake, opts, cb);
+	this.load_infrastructure(viper, opts, cb);
 	
 	this.state = STATE_INITED;
 }
@@ -102,14 +102,14 @@ Application.load = function(loaded, gadget, obj, cb) {
  *	Load component or infrastructure
  *
  */
-Application.load_infrastructure = function(marsnake, opts, cb) {
+Application.load_infrastructure = function(viper, opts, cb) {
 	var self = this;
 
 	opts["infrastructures"].forEach(function(obj){
-		if(marsnake.infrastructures.hasOwnProperty(obj["name"])){
-			self.load(self.loaded_infras, marsnake.infrastructures[obj["name"]], obj, cb);
+		if(viper.infrastructures.hasOwnProperty(obj["name"])){
+			self.load(self.loaded_infras, viper.infrastructures[obj["name"]], obj, cb);
 		}else{
-			cutils.invokeCallback(cb, 'infrastructure not found in marsnake: ' + obj["name"]);
+			cutils.invokeCallback(cb, 'infrastructure not found in viper: ' + obj["name"]);
 			return;
 		}
 	})

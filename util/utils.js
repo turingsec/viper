@@ -758,3 +758,67 @@ utils.get_parent_domain = function(domain) {
 	
 	return parent_domain;
 }
+
+utils.aes_encrypto = function(algorithm, padding, iv, key, data, cb){
+	this.aes_add_ext(data, function(doc){
+		try{
+			var cipherData = [];
+			var cipher = crypto.createCipheriv(algorithm, key, iv);
+			
+			cipher.setAutoPadding(padding);
+			cipherData.push(cipher.update(doc));
+			cipherData.push(cipher.final());
+			
+			cb(null, Buffer.concat(cipherData));
+		} catch(e) {
+			cb(e);
+		}
+	});
+}
+
+utils.aes_add_ext = function(data, cb){
+	var paddingStr = "";
+	var mode = 16 - (data.length % 16);
+	
+	while(mode) {
+		paddingStr += "{";
+		mode -= 1;
+	}
+	
+	data = Buffer.concat([data, Buffer.from(paddingStr)]);
+	cb(data);
+}
+
+utils.aes_decrypt = function(algorithm, key, data, iv, cb) {
+	var decoder = [];
+	var deCipher = crypto.createDecipheriv(algorithm, key, iv);
+
+	deCipher.setAutoPadding(false);
+	decoder.push(deCipher.update(data));
+	decoder.push(deCipher.final());
+	
+	this.aes_delete_ext(Buffer.concat(decoder).toString(), function(data){
+		cb(null, data);
+	});
+}
+
+utils.aes_delete_ext = function(data, cb){
+	while(data[data.length - 1] == "{"){
+		data = data.substring(0, data.length - 1);
+	}
+	
+	cb(data);
+}
+
+utils.rsa_encrypto = function(publicKey, data, length, cb){
+	var container = [];
+
+	for (var i = 0; i < data.length; i += length) {
+		container.push(crypto.publicEncrypt({
+			key: publicKey,
+			padding: crypto.constants.RSA_PKCS1_OAEP_PADDING
+		}, Buffer.from(data.slice(i, i + length))));
+	}
+	
+	cb(Buffer.concat(container));
+}

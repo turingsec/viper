@@ -27,11 +27,12 @@ tcp_session.prototype.get_id = function(){
 
 tcp_session.prototype.get_opts = function(closed = false){
 	return {
-		"id" : this.id,
-		"remote_ip" : this.remote_ip,
-		"remote_port" : this.remote_port,
-		"role" : constants.SOCKET_TYPE.SOCKET,
-		"closed" : closed
+		"id": this.id,
+		"name": this.name,
+		"remote_ip": this.remote_ip,
+		"remote_port": this.remote_port,
+		"role": constants.SOCKET_TYPE.SOCKET,
+		"closed": closed
 	};
 }
 
