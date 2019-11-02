@@ -3,7 +3,7 @@
  */
 const winston = require("winston");
 const path = require('path');
-const dailyRoateFile = require('winston-daily-rotate-file);
+const dailyRoateFile = require('winston-daily-rotate-file');
 
 module.exports = (function(){
 	return new mlogger();
