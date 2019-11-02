@@ -42,6 +42,7 @@
     "uuid": "^3.3.2",
     "vhost": "^3.0.2",
     "winston": "^3.1.0",
-    "winston-compat": "^0.1.4"
+    "winston-compat": "^0.1.4",
+    "winston-daily-rotate-file": "^4.2.1"
   }
 }
