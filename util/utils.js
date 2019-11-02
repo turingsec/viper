@@ -111,7 +111,7 @@ utils.arrayDiff = function (array1, array2) {
 /*
  * Date format
  */
-utils.format = function (date, format) {
+utils.date_format = function (date, format) {
 	format = format || 'MMddhhmm';
 	var o = {
 		"M+": date.getMonth() + 1, //month
@@ -279,9 +279,9 @@ utils.rsa_encrypto = function (publicKey, data, length, cb) {
 
 utils.load_file = function (file_path) {
 	return new Promise((resolve, reject) => {
-		var readStream = fs.createReadStream(file_path);
-		var zipBuffer = {};
-		var zipContent = [];
+		let readStream = fs.createReadStream(file_path);
+		let zipBuffer = {};
+		let zipContent = [];
 
 		readStream.on('data', function (chunk) {
 			zipContent.push(chunk);
@@ -295,6 +295,35 @@ utils.load_file = function (file_path) {
 		readStream.on('error', function (err) {
 			reject(err);
 		});
+	});
+}
+
+utils.save_file = function (file_path, data) {
+	return new Promise((resolve, reject) => {
+		let writeStream = fs.createWriteStream(file_path);
+		
+		//读取文件发生错误事件
+		writeStream.on('error', (err) => {
+			reject(err)
+		});
+
+		//已打开要写入的文件事件
+		writeStream.on('open', (fd) => {
+			
+		});
+
+		//文件已经就写入完成事件
+		writeStream.on('finish', () => {
+			resolve(null);
+		});
+		
+		//文件关闭事件
+		writeStream.on('close', () => {
+			
+		});
+		
+		writeStream.write(data);
+		writeStream.end();
 	});
 }
 
@@ -808,17 +837,4 @@ utils.aes_delete_ext = function(data, cb){
 	}
 	
 	cb(data);
-}
-
-utils.rsa_encrypto = function(publicKey, data, length, cb){
-	var container = [];
-
-	for (var i = 0; i < data.length; i += length) {
-		container.push(crypto.publicEncrypt({
-			key: publicKey,
-			padding: crypto.constants.RSA_PKCS1_OAEP_PADDING
-		}, Buffer.from(data.slice(i, i + length))));
-	}
-	
-	cb(Buffer.concat(container));
 }
