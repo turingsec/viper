@@ -59,7 +59,7 @@ mlogger.prototype.init = function(config, prefix){
 	];
 
 	// create logger instance
-	let logger = winston.createLogger({
+	self.logger = winston.createLogger({
 		level: defaultLogLevel,
 		format: formatter,
 		transports: logTransports,
@@ -70,11 +70,8 @@ mlogger.prototype.init = function(config, prefix){
 		],
 		exitOnError: false
 	});
-
-	logger.add(new winston.transports.Console({
-		format: formatter
-	}));
-
+	
+	/*
 	const levels = ["error", "warning", "info", "verbose", "debug", "silly"];
 
 	levels.forEach(function(level){
@@ -84,4 +81,17 @@ mlogger.prototype.init = function(config, prefix){
 			}
 		});
 	});
+	*/
+}
+
+mlogger.prototype.warning = function(data){
+	this.logger.warn(data);
+}
+
+mlogger.prototype.info = function(data){
+	this.logger.info(data);
+}
+
+mlogger.prototype.error = function(data){
+	this.logger.info(data);
 }

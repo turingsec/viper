@@ -686,7 +686,7 @@ utils.request = function (obj, option, cb) {
 			data.push(chunk);
 			dataLen += chunk.length;
 		}).on('end', function () {
-			var buf = new Buffer(dataLen);
+			var buf = Buffer.alloc(dataLen);
 
 			for (var i = 0, len = data.length, pos = 0; i < len; i++) {
 				data[i].copy(buf, pos);
@@ -837,4 +837,17 @@ utils.aes_delete_ext = function(data, cb){
 	}
 	
 	cb(data);
+}
+
+utils.rsa_encrypto2 = function(publicKey, data, length, cb){
+	var container = [];
+	
+	for (var i = 0; i < data.length; i += length) {
+		container.push(crypto.publicEncrypt({
+			key: publicKey,
+			padding: crypto.constants.RSA_PKCS1_OAEP_PADDING
+		}, Buffer.from(data.slice(i, i + length))));
+	}
+	
+	cb(Buffer.concat(container));
 }
