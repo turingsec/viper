@@ -831,15 +831,15 @@ utils.aes_decrypt = function(algorithm, key, data, iv, cb) {
 	});
 }
 
-utils.aes_delete_ext = function(data, cb){
-	while(data[data.length - 1] == "{"){
+utils.aes_delete_ext = function(data, cb) {
+	while(data[data.length - 1] == "{") {
 		data = data.substring(0, data.length - 1);
 	}
 	
 	cb(data);
 }
 
-utils.rsa_encrypto2 = function(publicKey, data, length, cb){
+utils.rsa_encrypto2 = function(publicKey, data, length, cb) {
 	var container = [];
 	
 	for (var i = 0; i < data.length; i += length) {

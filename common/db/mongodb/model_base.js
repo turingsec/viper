@@ -10,6 +10,22 @@ function model_base(){
 	this.model = null;
 }
 
+model_base.prototype.insertOne = function(obj){
+	let self = this;
+	
+	return new Promise((resolve, reject) => {
+		let doc = new self.model(obj);
+		
+		doc.save(function(err, product, numAffected){
+			if(err){
+				reject(err);
+			}
+			
+			resolve(null);
+		});
+	});
+}
+
 model_base.prototype.promise_count = function(cond){
 	let self = this;
 	
