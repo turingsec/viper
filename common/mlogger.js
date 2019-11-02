@@ -14,6 +14,7 @@ function mlogger(){
 }
 
 mlogger.prototype.init = function(config, prefix){
+	let self = this;
 	// logger directory
 	let logDir = config.log_dir;
 
