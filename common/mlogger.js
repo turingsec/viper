@@ -51,6 +51,9 @@ mlogger.prototype.init = function(config, prefix){
 			datePattern: 'YYYY-MM-DD-HH',
 			maxFiles: defaultMaxFiles,
 			maxSize: defaultMaxSize
+		}),
+		new winston.transports.Console({
+			handleExceptions: true
 		})
 	];
 
@@ -67,13 +70,13 @@ mlogger.prototype.init = function(config, prefix){
 		exitOnError: false
 	});
 
-	if (config.release == false) {
-		logger.add(new winston.transports.Console({
-			format: formatter
-		}));
-	}
+	logger.add(new winston.transports.Console({
+		format: formatter
+	}));
 
-	["error", "warning", "info", "verbose", "debug", "silly"].forEach(function(level){
+	const levels = ["error", "warning", "info", "verbose", "debug", "silly"];
+
+	levels.forEach(function(level){
 		Object.defineProperty(self, level, {
 			get : function () {
 				return self.logger[level];
