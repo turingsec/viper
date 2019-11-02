@@ -1,7 +1,6 @@
 /**
  * Module dependencies.
  */
-const fs = require('fs');
 const crypto = require('crypto');
 const UUID = require('uuid');
 const rsa = require("node-rsa");
@@ -275,64 +274,6 @@ utils.rsa_encrypto = function (publicKey, data, length, cb) {
 	}
 
 	cb(Buffer.concat(container));
-}
-
-utils.load_file = function (file_path) {
-	return new Promise((resolve, reject) => {
-		let readStream = fs.createReadStream(file_path);
-		let zipBuffer = {};
-		let zipContent = [];
-
-		readStream.on('data', function (chunk) {
-			zipContent.push(chunk);
-		});
-
-		readStream.on('end', function () {
-			zipBuffer = Buffer.concat(zipContent);
-			resolve(zipBuffer);
-		});
-
-		readStream.on('error', function (err) {
-			reject(err);
-		});
-	});
-}
-
-utils.save_file = function (file_path, data) {
-	return new Promise((resolve, reject) => {
-		let writeStream = fs.createWriteStream(file_path);
-		
-		//读取文件发生错误事件
-		writeStream.on('error', (err) => {
-			reject(err)
-		});
-
-		//已打开要写入的文件事件
-		writeStream.on('open', (fd) => {
-			
-		});
-
-		//文件已经就写入完成事件
-		writeStream.on('finish', () => {
-			resolve(null);
-		});
-		
-		//文件关闭事件
-		writeStream.on('close', () => {
-			
-		});
-		
-		writeStream.write(data);
-		writeStream.end();
-	});
-}
-
-utils.read_file_sync = function (file_path, encode = "utf8") {
-	return fs.readFileSync(file_path, { "encoding": encode })
-}
-
-utils.write_file_sync = function (file_path, data) {
-	fs.writeFileSync(file_path, data);
 }
 
 utils.get_obj_length = function (obj) {
