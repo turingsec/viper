@@ -60,14 +60,16 @@ model_base.prototype.promise_count = function(cond){
 	});
 }
 
-model_base.prototype.promise_find = function(filter, projection, options){
+model_base.prototype.promise_find = function(filter, projection, limit, skip, sort){
 	let self = this;
 	
 	projection = projection || {};
-	options = options || {};
-
+	limit = limit || 0;
+	skip = skip || 0;
+	sort = sort || {};
+	
 	return new Promise((resolve, reject) => {
-		self.model.find(filter, projection, options, function (err, docs) {
+		self.model.find(filter).select(projection).limit(limit).skip(skip).sort(sort).exec(function (err, docs) {
 			if(err){
 				reject(err);
 			}else{
