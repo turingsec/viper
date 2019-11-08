@@ -84,7 +84,7 @@ model_base.prototype.count = function(cond, cb){
 		if(err){
 			console.log("count err:" + err);
 		}
-
+		
 		cb(count);
 	});
 }
