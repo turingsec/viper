@@ -10,7 +10,7 @@ function model_base(){
 	this.model = null;
 }
 
-model_base.prototype.insertOne = function(obj){
+model_base.prototype.promise_insert = function(obj){
 	let self = this;
 	
 	return new Promise((resolve, reject) => {
@@ -26,6 +26,26 @@ model_base.prototype.insertOne = function(obj){
 	});
 }
 
+model_base.prototype.promise_update = function(filter, doc, options){
+	let self = this;
+
+	options = options || {};
+	// options = options || {
+	// 	upsert: true,
+	// 	setDefaultsOnInsert: true
+	// };
+
+	return new Promise((resolve, reject) => {
+		self.model.update(filter, doc, options, function (err, res) {
+			if(err){
+				reject(err);
+			}else{
+				resolve(res);
+			}
+		});
+	});
+}
+
 model_base.prototype.promise_count = function(cond){
 	let self = this;
 	
@@ -36,6 +56,23 @@ model_base.prototype.promise_count = function(cond){
 			}
 			
 			resolve(count);
+		});
+	});
+}
+
+model_base.prototype.promise_find = function(filter, projection, options){
+	let self = this;
+	
+	projection = projection || {};
+	options = options || {};
+
+	return new Promise((resolve, reject) => {
+		self.model.find(filter, projection, options, function (err, docs) {
+			if(err){
+				reject(err);
+			}else{
+				resolve(docs);
+			}
 		});
 	});
 }
