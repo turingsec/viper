@@ -32,8 +32,6 @@ var express_server = function (_, opts) {
 };
 
 express_server.prototype.start = function (cb) {
-
-
 	var app = express();
 	var count = this.port.length;
 	var self = this;
@@ -60,17 +58,8 @@ express_server.prototype.start = function (cb) {
 	app.use(bodyParser.raw({ limit: '50mb' }));
 	app.use(bodyParser.text());
 	app.use(bodyParser.urlencoded({ extended: false }));
-	// 解决微信支付通知回调数据
-	app.use(bodyParser.xml({
-		limit: '2MB', // Reject payload bigger than 1 MB
-		xmlParseOptions: {
-			normalize: true, // Trim whitespace inside text nodes
-			normalizeTags: true, // Transform tags to lowercase
-			explicitArray: false // Only put nodes in array if >1
-		}
-	}));
 	app.use(cookieParser(this.secret));
-
+	
 	if (this.allow_origin) {
 		app.all("*", function (req, res, next) {
 			res.header('Access-Control-Allow-Origin', req.headers.origin);
@@ -118,8 +107,7 @@ express_server.prototype.start = function (cb) {
 		res.status(err.status || 500);
 		res.redirect(`${req.protocol}://${req.get("host")}/error`);
 	});
-
-
+	
 	this.port.forEach(function (item) {
 		var server = null;
 
