@@ -64,7 +64,7 @@ model_base.prototype.promise_find = function(filter, projection, limit, skip, so
 	let self = this;
 	
 	projection = projection || {};
-	limit = limit || 0;
+	limit = limit || 20;
 	skip = skip || 0;
 	sort = sort || {};
 	
