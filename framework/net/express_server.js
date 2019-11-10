@@ -52,7 +52,7 @@ express_server.prototype.start = function (cb) {
 		app.use(favicon(this.express.favicon));
 		app.use(express.static(this.express.static.path, this.express.static.value));
 	}
-
+	
 	app.use(logger('dev'));
 	app.use(bodyParser.json({ limit: '50mb' }));
 	app.use(bodyParser.raw({ limit: '50mb' }));

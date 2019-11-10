@@ -50,9 +50,10 @@ model_base.prototype.promise_count = function(cond){
 	let self = this;
 	
 	return new Promise((resolve, reject) => {
-		self.model.countDocuments(cond, function(err, count){
+		self.model.estimatedDocumentCount(cond, function(err, count){
 			if(err){
-				console.log("count err:" + err);
+				reject(err);
+				return;
 			}
 			
 			resolve(count);
