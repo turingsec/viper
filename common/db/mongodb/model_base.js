@@ -36,7 +36,7 @@ model_base.prototype.promise_update = function(filter, doc, options){
 	// };
 
 	return new Promise((resolve, reject) => {
-		self.model.update(filter, doc, options, function (err, res) {
+		self.model.updateOne(filter, doc, options, function (err, res) {
 			if(err){
 				reject(err);
 			}else{
