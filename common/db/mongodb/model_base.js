@@ -80,6 +80,39 @@ model_base.prototype.promise_find = function(filter, projection, limit, skip, so
 	});
 }
 
+model_base.prototype.promise_findone = function(cond, projection, options){
+	let self = this;
+	
+	projection = projection || {};
+	options = options || {};
+	
+	return new Promise((resolve, reject) => {
+		self.model.findOne(cond, projection, options).exec(function (err, doc) {
+			if(err){
+				reject(err);
+			}else{
+				resolve(doc);
+			}
+		});
+	});
+}
+
+model_base.prototype.promise_delete = function(cond, options){
+	let self = this;
+	
+	options = options || {};
+	
+	return new Promise((resolve, reject) => {
+		self.model.deleteOne(cond, options).exec(function (err) {
+			if(err){
+				reject(err);
+			}else{
+				resolve();
+			}
+		});
+	});
+}
+
 model_base.prototype.count = function(cond, cb){
 	this.model.countDocuments(cond, function(err, count){
 		if(err){
