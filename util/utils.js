@@ -11,6 +11,7 @@ const exec = require('child_process').exec;
 const admzip = require('adm-zip');
 const xml2js = require('xml2js');
 const parseDomain = require('parse-domain');
+const spawn = require('child_process').spawn;
 
 var utils = module.exports = {};
 
@@ -658,7 +659,7 @@ utils.xmlToJson = function (xml) {
 			}
 			resolve(result)
 		})
-	})
+	});
 }
 
 /**
@@ -758,4 +759,21 @@ utils.order_translate = function(default_sort, ask_sort){
 	}else{
 		return default_sort;
 	}
+}
+
+utils.spawn = function(proc_name, params){
+	return new Promise((resolve, reject) => {
+		let proc = spawn(proc_name, params);
+		
+		proc.stdout.setEncoding('utf8');
+		proc.stdout.on('data', function (data) {
+			let str = data.toString()
+			let lines = str.split(/(\r?\n)/g);
+			console.log(lines.join(""));
+		});
+		
+		proc.on('close', function (code) {
+			resolve(code);
+		});
+	});
 }
