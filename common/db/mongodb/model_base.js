@@ -26,7 +26,23 @@ model_base.prototype.promise_insert = function(obj){
 	});
 }
 
-model_base.prototype.promise_update = function(filter, doc, options){
+model_base.prototype.promise_updatemany = function(filter, doc, options){
+	let self = this;
+	
+	options = options || {};
+
+	return new Promise((resolve, reject) => {
+		self.model.updateMany(filter, doc, options, function (err, res) {
+			if(err){
+				reject(err);
+			}else{
+				resolve(res);
+			}
+		});
+	});
+}
+
+model_base.prototype.promise_updateone = function(filter, doc, options){
 	let self = this;
 
 	options = options || {};
@@ -34,7 +50,7 @@ model_base.prototype.promise_update = function(filter, doc, options){
 	// 	upsert: true,
 	// 	setDefaultsOnInsert: true
 	// };
-
+	
 	return new Promise((resolve, reject) => {
 		self.model.updateOne(filter, doc, options, function (err, res) {
 			if(err){
