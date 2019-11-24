@@ -28,7 +28,7 @@
     "express-rate-limit": "^3.3.2",
     "file-stream-rotator": "^0.4.1",
     "ip": "^1.1.5",
-    "mmmagic": "^0.5.2",
+    "mmmagic": "^0.5.3",
     "moment": "^2.24.0",
     "morgan": "^1.9.1",
     "node-rsa": "^1.0.3",
