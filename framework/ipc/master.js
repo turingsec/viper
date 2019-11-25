@@ -16,6 +16,7 @@ master.init = function(app, opts){
 	self.children = [];
 	self.child_module_path = opts.path;
 	self.child_num = opts.num;
+	self.end_cb = opts.end_cb || process.exit;
 }
 
 master.start = function(cb) {
@@ -28,13 +29,24 @@ master.start = function(cb) {
 			});
 		});
 		
-		tmp_child.on('error', function(e) {
-			mlogger.error(`Child error:${e}`);
+		tmp_child.on('close', (code) => {
+			mlogger.error(`Child close stdio with code:${code}`);
+			self.destroy();
 		});
 		
-		tmp_child.on('disconnect', function(e) {
-			mlogger.error(`Child disconnect error:${e}`);
-			self.destroy(tmp_child);
+		tmp_child.on('exit', (code) => {
+			mlogger.error(`Child exit with code:${code}`);
+			self.destroy();
+		});
+
+		tmp_child.on('error', function(e) {
+			mlogger.error(`Child error:${e}`);
+			self.destroy();
+		});
+		
+		tmp_child.on('disconnect', function() {
+			mlogger.error(`Child disconnect`);
+			self.destroy();
 		});
 		
 		self.children.push(tmp_child);
@@ -49,8 +61,8 @@ master.stop = function(cb) {
 	}
 };
 
-master.destroy = function(child) {
-	child.kill();
+master.destroy = function() {
+	self.end_cb();
 };
 
 master.send2child = function(packet, opts){
