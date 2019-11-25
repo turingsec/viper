@@ -17,7 +17,7 @@ file_detector.prototype.tell = function(content){
 	return new Promise(function (resolve, reject) {
 		that.magic.detect(content, function(err, result) {
 			if (err){
-				reject(err);
+				resolve(null);
 			}else{
 				resolve(result);
 			}
