@@ -29,13 +29,12 @@ master.start = function(cb) {
 		});
 		
 		tmp_child.on('error', function(e) {
-			mlogger.error("child error " + e);
+			mlogger.error(`Child error:${e}`);
 		});
 		
 		tmp_child.on('disconnect', function(e) {
-			mlogger.error("child disconnect " + e);
-			
-			self.destroy();
+			mlogger.error(`Child disconnect error:${e}`);
+			self.destroy(tmp_child);
 		});
 		
 		self.children.push(tmp_child);
@@ -50,8 +49,8 @@ master.stop = function(cb) {
 	}
 };
 
-master.destroy = function() {
-	process.kill();
+master.destroy = function(child) {
+	child.kill();
 };
 
 master.send2child = function(packet, opts){
