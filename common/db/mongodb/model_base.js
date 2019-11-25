@@ -129,6 +129,20 @@ model_base.prototype.promise_delete = function(cond, options){
 	});
 }
 
+model_base.prototype.promise_aggregate = function(pipeline){
+	let self = this;
+	
+	return new Promise((resolve, reject) => {
+		self.model.aggregate(pipeline).exec(function (err, res) {
+			if(err){
+				reject(err);
+			}else{
+				resolve(res);
+			}
+		});
+	});
+}
+
 model_base.prototype.count = function(cond, cb){
 	this.model.countDocuments(cond, function(err, count){
 		if(err){
