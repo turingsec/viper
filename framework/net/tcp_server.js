@@ -27,7 +27,7 @@ tcp_server.prototype.start = function(cb) {
 	});
 	
 	this.server.on('error', (err) => {
-		if (error.code === PORT_IN_USE) {
+		if (err.code === PORT_IN_USE) {
 			mlogger.info('port is in use:' + self.port);
 		}
 	});
