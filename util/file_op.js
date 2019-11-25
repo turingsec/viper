@@ -56,6 +56,10 @@ file_op.save_file = function (file_path, data) {
 }
 
 file_op.remove_file = function(file_path){
+	if(!fs.existsSync(file_path)){
+		return null;
+	}
+	
 	return new Promise((resolve, reject) => {
 		fs.unlink(file_path, function (err) {
 			if (err){
