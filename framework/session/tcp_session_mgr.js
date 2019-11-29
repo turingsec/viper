@@ -33,7 +33,7 @@ tcp_session_mgr.ready2send = function(message, cb){
 		
 		if(session){
 			if(opts["closed"]){
-				session.kill("initiative");
+				session.kill(message["packet"]);
 			}else{
 				session.send(message["packet"]);
 			}
