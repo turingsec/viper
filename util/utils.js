@@ -712,16 +712,20 @@ utils.aes_add_ext = function(data, cb){
 	cb(data);
 }
 
-utils.aes_decrypt = function(algorithm, key, data, iv, cb) {
-	var decoder = [];
-	var deCipher = crypto.createDecipheriv(algorithm, key, iv);
+utils.aes_decrypt = function(algorithm, key, data, iv) {
+	let self = this;
 
-	deCipher.setAutoPadding(false);
-	decoder.push(deCipher.update(data));
-	decoder.push(deCipher.final());
-	
-	this.aes_delete_ext(Buffer.concat(decoder).toString(), function(data){
-		cb(null, data);
+	return new Promise((resolve, reject) => {
+		let decoder = [];
+		let deCipher = crypto.createDecipheriv(algorithm, key, iv);
+
+		deCipher.setAutoPadding(false);
+		decoder.push(deCipher.update(data));
+		decoder.push(deCipher.final());
+		
+		self.aes_delete_ext(Buffer.concat(decoder).toString(), function(data){
+			resolve(data);
+		});
 	});
 }
 
