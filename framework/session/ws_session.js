@@ -85,7 +85,7 @@ ws_session.prototype.close = function(reason, description){
 	if (this.sock) {
 		try {
 			if(reason){
-				mlogger.error(this.name + ' Websocket connection closed with reason:' + reason);
+				mlogger.error(this.name + ' Websocket connection closed with reason:' + reason + ' des: ' + description);
 			}else{
 				mlogger.error(this.name + ' Websocket connection closed without reason without error');
 			}
