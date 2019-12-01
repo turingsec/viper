@@ -85,6 +85,10 @@ model_base.prototype.promise_find = function(filter, projection, limit, skip, so
 	skip = skip || 0;
 	sort = sort || {};
 	
+	if(limit == -1){
+		limit = 0;
+	}
+	
 	return new Promise((resolve, reject) => {
 		self.model.find(filter).select(projection).limit(limit).skip(skip).sort(sort).exec(function (err, docs) {
 			if(err){
