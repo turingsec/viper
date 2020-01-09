@@ -79,3 +79,7 @@ file_op.read_file_sync = function (file_path, encode = "utf8") {
 file_op.write_file_sync = function (file_path, data) {
 	fs.writeFileSync(file_path, data);
 }
+
+file_op.file_exists = function(file_path){
+	return fs.existsSync(file_path);
+}
