@@ -2,6 +2,7 @@
  * Module dependencies.
  */
 const fs = require('fs');
+const formidable = require('formidable');
 
 var file_op = module.exports = {};
 
@@ -82,4 +83,31 @@ file_op.write_file_sync = function (file_path, data) {
 
 file_op.file_exists = function(file_path){
 	return fs.existsSync(file_path);
+}
+
+file_op.upload_common = function(req, upload_dir) {
+	return new Promise((resolve, reject) => {	
+		if (!fs.existsSync(upload_dir)) {
+			fs.mkdirSync(upload_dir);
+		}
+		
+		// create an incoming form object
+		let form = new formidable.IncomingForm();
+		
+		// specify that we want to allow the user to upload multiple files in a single request
+		form.multiples = false;
+		form.maxFileSize = 15 * 1024 * 1024;
+		form.encoding = 'utf-8';
+		form.hash = "md5";
+		form.keepExtensions = true;
+		form.uploadDir = upload_dir;
+		
+		form.parse(req, async function (err, fields, files) {
+			resolve({
+				err,
+				fields,
+				files
+			});
+		});
+	});
 }

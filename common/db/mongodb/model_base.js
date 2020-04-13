@@ -100,14 +100,15 @@ model_base.prototype.promise_find = function(filter, projection, limit, skip, so
 	});
 }
 
-model_base.prototype.promise_findone = function(cond, projection, options){
+model_base.prototype.promise_findone = function(cond, projection, options, sort){
 	let self = this;
 	
 	projection = projection || {};
 	options = options || {};
+	sort = sort || {};
 	
 	return new Promise((resolve, reject) => {
-		self.model.findOne(cond, projection, options).exec(function (err, doc) {
+		self.model.findOne(cond, projection, options).sort(sort).exec(function (err, doc) {
 			if(err){
 				reject(err);
 			}else{
