@@ -54,6 +54,19 @@ file_detector.prototype.allow_upload = async function(content){
 	return this.is_document(result);
 }
 
+file_detector.prototype.tell_os = function(mime){
+	if(result.startsWith("PE32 executable") || 
+		result.startsWith("PE32+ executable")){
+		return "windows";
+	}
+
+	if(result.startsWith("ELF")){
+		return "linux";
+	}
+
+	return "unknown";
+}
+
 file_detector.prototype.is_document = function(id){
 	if(id.startsWith("PE32 executable") ||
 		id.startsWith("PE32+ executable") ||
