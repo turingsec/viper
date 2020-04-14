@@ -55,12 +55,12 @@ file_detector.prototype.allow_upload = async function(content){
 }
 
 file_detector.prototype.tell_os = function(mime){
-	if(result.startsWith("PE32 executable") || 
-		result.startsWith("PE32+ executable")){
+	if(mime.startsWith("PE32 executable") || 
+		mime.startsWith("PE32+ executable")){
 		return "windows";
 	}
-
-	if(result.startsWith("ELF")){
+	
+	if(mime.startsWith("ELF")){
 		return "linux";
 	}
 
