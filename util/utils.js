@@ -274,6 +274,12 @@ utils.randomNum = function (n) {
 	return Num;
 }
 
+utils.random_between = function(min, max){
+	return Math.floor(
+		Math.random() * (max - min) + min
+	);
+}
+
 utils.random_string = function (count, chars) {
 	chars = chars
 		|| "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
@@ -667,52 +673,52 @@ utils.xmlToJson = function (xml) {
  * @param domain
  * @constructor
  */
-utils.get_parent_domain = function(domain) {
+utils.get_parent_domain = function (domain) {
 	let obj = parseDomain(domain);
 	let parent_domain = null;
-	
-	if(obj.subdomain){
+
+	if (obj.subdomain) {
 		if (obj.subdomain.split(".").length > 1) {
 			parent_domain = `${obj.subdomain.slice(obj.subdomain.indexOf(".") + 1)}.${obj.domain}.${obj.tld}`;
-		}else{
+		} else {
 			parent_domain = `${obj.domain}.${obj.tld}`;
 		}
 	}
-	
+
 	return parent_domain;
 }
 
-utils.aes_encrypto = function(algorithm, padding, iv, key, data, cb){
-	this.aes_add_ext(data, function(doc){
-		try{
+utils.aes_encrypto = function (algorithm, padding, iv, key, data, cb) {
+	this.aes_add_ext(data, function (doc) {
+		try {
 			var cipherData = [];
 			var cipher = crypto.createCipheriv(algorithm, key, iv);
-			
+
 			cipher.setAutoPadding(padding);
 			cipherData.push(cipher.update(doc));
 			cipherData.push(cipher.final());
-			
+
 			cb(null, Buffer.concat(cipherData));
-		} catch(e) {
+		} catch (e) {
 			cb(e);
 		}
 	});
 }
 
-utils.aes_add_ext = function(data, cb){
+utils.aes_add_ext = function (data, cb) {
 	var paddingStr = "";
 	var mode = 16 - (data.length % 16);
-	
-	while(mode) {
+
+	while (mode) {
 		paddingStr += "{";
 		mode -= 1;
 	}
-	
+
 	data = Buffer.concat([data, Buffer.from(paddingStr)]);
 	cb(data);
 }
 
-utils.aes_decrypt = function(algorithm, key, data, iv) {
+utils.aes_decrypt = function (algorithm, key, data, iv) {
 	let self = this;
 
 	return new Promise((resolve, reject) => {
@@ -722,60 +728,60 @@ utils.aes_decrypt = function(algorithm, key, data, iv) {
 		deCipher.setAutoPadding(false);
 		decoder.push(deCipher.update(data));
 		decoder.push(deCipher.final());
-		
-		self.aes_delete_ext(Buffer.concat(decoder).toString(), function(data){
+
+		self.aes_delete_ext(Buffer.concat(decoder).toString(), function (data) {
 			resolve(data);
 		});
 	});
 }
 
-utils.aes_delete_ext = function(data, cb) {
-	while(data[data.length - 1] == "{") {
+utils.aes_delete_ext = function (data, cb) {
+	while (data[data.length - 1] == "{") {
 		data = data.substring(0, data.length - 1);
 	}
-	
+
 	cb(data);
 }
 
-utils.rsa_encrypto2 = function(publicKey, data, length, cb) {
+utils.rsa_encrypto2 = function (publicKey, data, length, cb) {
 	var container = [];
-	
+
 	for (var i = 0; i < data.length; i += length) {
 		container.push(crypto.publicEncrypt({
 			key: publicKey,
 			padding: crypto.constants.RSA_PKCS1_OAEP_PADDING
 		}, Buffer.from(data.slice(i, i + length))));
 	}
-	
+
 	cb(Buffer.concat(container));
 }
 
-utils.order_translate = function(default_sort, ask_sort){
+utils.order_translate = function (default_sort, ask_sort) {
 	let order_translate = {
 		"ascend": "asc",
 		"descend": "desc"
 	};
-	
-	if(ask_sort){
+
+	if (ask_sort) {
 		return {
 			[ask_sort.key]: order_translate[ask_sort.order]
 		};
-	}else{
+	} else {
 		return default_sort;
 	}
 }
 
-utils.spawn = function(proc_name, params){
+utils.spawn = function (proc_name, params) {
 	return new Promise((resolve, reject) => {
 		let proc = spawn(proc_name, params);
-		
+
 		proc.stdout.setEncoding('utf8');
 		proc.stdout.on('data', function (data) {
 			let str = data.toString()
 			let lines = str.split(/(\r?\n)/g);
 			console.log(lines.join(""));
 		});
-		
+
 		proc.on('close', function (code) {
 			resolve(code);
 		});
