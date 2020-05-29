@@ -64,6 +64,10 @@ file_detector.prototype.tell_os = function(mime){
 		return "linux";
 	}
 
+	if(mime.startsWith("Zip archive data")){
+		return "android";
+	}
+	
 	return "unknown";
 }
 
